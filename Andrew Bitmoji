@@ -81,4 +81,6 @@ var eyes = function () {
 
 };
 
-drawbitmoji(70, 200, 200)
+drawbitmoji(70, 200, 200);
+
+

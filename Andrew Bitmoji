@@ -1,0 +1,84 @@
+var drawbitmoji = function (height, bitX, bitY) {
+
+
+
+var drawbody = function() {
+
+
+// start shirt 
+    fill(227, 164, 221);
+    noStroke();
+    rect(bitX +height/130*196, bitY + height/130* 233, height/130*121, height/130*32);
+    fill(46, 21, 1);
+    textSize(height/130*22);
+    text("AK", bitX +height/130*218, bitY + height/130*230,height/130* 73,height/130* 40);
+// end shirt
+
+//start head
+    fill(247, 221, 161);
+    noStroke();
+    ellipse(bitX +height/130*200,bitY + height/130*170,height/130*91,height/130* 130); 
+    fill(255, 255, 255); 
+    noStroke();
+    fill(255, 255, 255);
+    
+// end head
+
+// hat
+    fill(4, 1, 26);
+    stroke(255, 255, 255);
+    strokeWeight(height/130*2);
+    arc(bitX +height/130*200, bitY + height/130*133,height/130*81,height/130*67,180,361);
+    fill(71, 70, 79);
+    arc(bitX +height/130*200, bitY + height/130*133,height/130*79,height/130*-19,180,361);
+    fill(145, 151, 166);
+    quad(bitX +height/130*223, bitY + height/130* 119,bitX + height/130*201, bitY +height/130*  129,bitX +height/130* 178, bitY + height/130* 119,bitX + height/130*201,  bitY +height/130* 108);
+// end hat 
+
+// eyebrows
+    noFill();
+    stroke(59, 32, 2);
+    strokeWeight(height/130*2);
+    arc(bitX +height/130*179, bitY + height/130*151,height/130*22,height/130*15,204,334);
+    arc(bitX +height/130*223, bitY + height/130*151,height/130*22,height/130*15,202,344);
+// end eyebrows
+
+// mouth
+    fill(255, 255, 255);
+    stroke(163, 27, 48);
+    arc(bitX +height/130*201, bitY + height/130*207,height/130*45,height/130*22,361,539);
+    line(bitX +height/130*221, bitY +  height/130*207,bitX + height/130*180, bitY +  height/130*207);
+// end mouth
+
+// nose
+    fill(247, 221, 161);
+    stroke(0, 0, 0);
+    strokeWeight(height/130*3);
+    bezier(bitX +height/130*203, bitY + height/130* 187,bitX + height/130*242, bitY +  height/130*194,bitX + height/130*190, bitY + height/130* 167,bitX + height/130*202,  bitY + height/130*173);
+// nose end
+};
+
+var eyes = function () {
+
+
+//eyes
+    noStroke();
+    fill(237, 237, 240);
+    ellipse(bitX + height/130*178,bitY + height/130*156, height/130*18,height/130* 14); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*156, height/130*18, height/130*14); // //right eye
+    fill(16, 23, 122);
+    ellipse(bitX + height/130*178,bitY + height/130*157, height/130*11,height/130* 8); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*157, height/130*11, height/130*8); // //right eye
+    fill(0, 0, 0);
+    ellipse(bitX + height/130*178,bitY + height/130*157,height/130* 4, height/130*3); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*157, height/130*4, height/130*3); // //right eye
+//end eyes  
+
+};
+
+    drawbody();
+    eyes();
+
+};
+
+drawbitmoji(70, 200, 200)

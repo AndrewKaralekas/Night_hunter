@@ -1,0 +1,412 @@
+var currentScene = 0;
+
+//timer variables
+var gameTime = millis();
+var timeReset = millis();
+var stillPlay = true; 
+
+var drawbitmoji = function (height, bitX, bitY) {
+
+
+
+var drawbody = function() {
+
+
+// start shirt 
+    fill(227, 164, 221);
+    noStroke();
+    rect(bitX +height/130*138, bitY + height/130* 225, height/130*121, height/130*32);
+    fill(46, 21, 1);
+    textSize(height/130*22);
+    text("AK", bitX +height/130*218, bitY + height/130*235,height/130* 73,height/130* 40);
+// end shirt
+
+//start head
+    fill(247, 221, 161);
+    noStroke();
+    ellipse(bitX +height/130*200,bitY + height/130*170,height/130*91,height/130* 130); 
+    fill(255, 255, 255); 
+    noStroke();
+    fill(255, 255, 255);
+    
+// end head
+
+// hat
+    fill(4, 1, 26);
+    stroke(255, 255, 255);
+    strokeWeight(height/130*2);
+    arc(bitX +height/130*200, bitY + height/130*133,height/130*81,height/130*67,180,361);
+    fill(71, 70, 79);
+    arc(bitX +height/130*200, bitY + height/130*133,height/130*79,height/130*-19,180,361);
+    fill(145, 151, 166);
+    quad(bitX +height/130*223, bitY + height/130* 119,bitX + height/130*201, bitY +height/130*  129,bitX +height/130* 178, bitY + height/130* 119,bitX + height/130*201,  bitY +height/130* 108);
+// end hat 
+
+// eyebrows
+    noFill();
+    stroke(59, 32, 2);
+    strokeWeight(height/130*2);
+    arc(bitX +height/130*179, bitY + height/130*151,height/130*22,height/130*15,204,334);
+    arc(bitX +height/130*223, bitY + height/130*151,height/130*22,height/130*15,202,344);
+// end eyebrows
+
+// mouth
+    fill(255, 255, 255);
+    stroke(163, 27, 48);
+    arc(bitX +height/130*201, bitY + height/130*207,height/130*45,height/130*22,361,539);
+    line(bitX +height/130*221, bitY +  height/130*207,bitX + height/130*180, bitY +  height/130*207);
+// end mouth
+
+// nose
+    fill(247, 221, 161);
+    stroke(0, 0, 0);
+    strokeWeight(height/130*3);
+    bezier(bitX +height/130*203, bitY + height/130* 187,bitX + height/130*242, bitY +  height/130*194,bitX + height/130*190, bitY + height/130* 167,bitX + height/130*202,  bitY + height/130*173);
+// nose end
+};
+
+var eyes = function () {
+
+
+//eyes
+    noStroke();
+    fill(237, 237, 240);
+    ellipse(bitX + height/130*178,bitY + height/130*156, height/130*18,height/130* 14); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*156, height/130*18, height/130*14); // //right eye
+    fill(16, 23, 122);
+    ellipse(bitX + height/130*178,bitY + height/130*157, height/130*11,height/130* 8); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*157, height/130*11, height/130*8); // //right eye
+    fill(0, 0, 0);
+    ellipse(bitX + height/130*178,bitY + height/130*157,height/130* 4, height/130*3); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*157, height/130*4, height/130*3); // //right eye
+//end eyes  
+
+};
+
+    drawbody();
+    eyes();
+
+};
+
+drawbitmoji(70, 200, 200);
+var drawHead = function(X,Y,H){
+    fill (224, 172, 105);//skin color
+    ellipse(X+H/100*100,Y+H/100*100,H/100*78,H/100*100);//head
+    fill(32, 58, 189);//chisel color
+    arc(X+H/100*45,Y+H/100*154,H/100*78,H/100*97,7,372);//left chisel 
+    arc(X+H/100*157,Y+H/100*154,H/100*78,H/100*97,7,372);//right chisel
+};
+var drawHair = function(X,Y,H){fill(48, 28, 14);//hair color
+    ellipse(X+H/100*66,Y+H/100*70,H/100*23,H/100*29);//hair
+    ellipse(X+H/100*57,Y+H/100*81,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*76,Y+H/100*61,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*88,Y+H/100*53,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*143,Y+H/100*81,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*119,Y+H/100*53,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*130,Y+H/100*61,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*136,Y+H/100*70,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*102,Y+H/100*50,H/100*21,H/100*29);//hair
+};
+var drawHat =function (X,Y,H){fill(230, 37, 37);//hat color
+    arc(X+H/100*104,Y+H/100*57,H/100*85,H/100*72,186,369);//hat
+    stroke(230,37,37);//hat
+    strokeWeight(H/100*5);//hat
+    line(X+H/100*63,Y+H/100*55,X+H/100*180,Y+H/100*66);//hat
+};
+var drawEyes= function (X,Y,H){
+    noStroke();
+    fill(240, 231, 226);//whitecolor
+    ellipse(X+H/100*89,Y+H/100*88,H/100*19,H/100*10);//left eye circle
+    fill(138,94,65);//brown color
+    ellipse(X+H/100*90,Y+H/100*88,H/100*13,H/100*7);//left middle eye circle
+    fill(0, 0, 0);//blackcolor
+    ellipse(X+H/100*90,Y+H/100*88,H/100*4,H/100*5);//left eye
+    //ellipse(118,88,5,5);//right eye
+    fill(240, 231, 226);//whitecolor
+    ellipse(X+H/100*117,Y+H/100*88,H/100*19,H/100*10);//right eye circle
+    fill(138,94,65);//brown color
+    ellipse(X+H/100*116,Y+H/100*88,H/100*13,H/100*7);//right middle eye circle
+    fill(0, 0, 0);//blackcolor
+    ellipse(X+H/100*116,Y+H/100*88,H/100*4,H/100*5);//right eye  
+};
+var drawNoseMouth= function(X,Y,H){
+    fill(224, 172, 105);//nose color
+    stroke(0, 0, 0);//stroke
+    strokeWeight(H/100*2);//strokeweight
+    bezier(X+H/100*104,Y+H/100*97,X+H/100*124,Y+H/100*128,X+H/100*98,Y+H/100*122,X+H/100*97    ,Y+H/100*117);//nose shape
+    fill(255, 255, 255);
+    arc(X+H/100*102,Y+H/100*129,H/100*30,H/100*10,1,180);//mouth
+    stroke(0, 0, 0);
+    line(X+H/100*85,Y+H/100*128,X+H/100*118,Y+H/100*128);//top lip 
+};
+var drawHoodie= function(X,Y,H){
+    fill(9, 21, 82);//sweater color 
+    noStroke();
+    quad(X+H/100*37,Y+H/100*140,X+H/100*183,Y+H/100*248,X+H/100*174,Y+H/100*140,X+H/100*101    ,Y+H/100*149);//sweater 
+    quad(X+H/100*37,Y+H/100*140,X+H/100*29,Y+H/100*243,X+H/100*184,Y+H/100*249,X+H/100*102,Y    +H/100*152);//sweater
+};
+var drawText=function(X,Y,H){
+    fill(255, 255, 255);//text color
+    textSize(H/100*20);//text size
+    text("Paris",X+H/100*50,Y+H/100*175);//text 
+    textSize(H/100*8);//text size
+    text("Huncho",X+H/100*90,Y+H/100*56);//text on hat
+    textSize(H/100*28);//name size
+    text("RG",X+H/100*111,Y+H/100*186);//my name on shirt 
+};
+var drawBitmojiHead=function(X,Y,H){
+    drawHead(X,Y,H);
+    drawHair(X,Y,H);
+    drawHat(X,Y,H);
+    drawEyes(X,Y,H);
+    drawNoseMouth(X,Y,H);
+};
+var drawBitmojiBody=function(X,Y,H){
+    drawText(X,Y,H);
+    drawHoodie(X,Y,H);
+};
+var drawBitmoji2=function(X,Y,H){
+    drawBitmojiHead(X,Y,H);
+    drawBitmojiBody(X,Y,H);
+};
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+Button.prototype.draw = function() {
+    fill(184, 184, 184);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+10, this.y+this.height/4);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+//this is the button that will be displayed at the bottom left of the screen
+var startButton = new Button({
+    x:130,
+    y: 115,
+    label: "Start Game!",
+    onClick: function() {
+        if ( currentScene === 0 )
+        {
+            currentScene = 1;
+
+    
+        }
+    }
+});
+var splashScreen = function() 
+{
+    background(32, 58, 189);
+    drawBitmoji2(85,216,33);//Rodrigo's Bitmoji
+    drawbitmoji(61,184,172);
+    fill(255, 255, 255);
+    textSize(30);
+    text("Memory Game",103,50);
+    textSize(15);
+    text("Rodrigo Amado",66,199);
+    text("Andrew Karalekas",227,199);
+    startButton.draw();
+    currentScene = 0;
+
+
+};
+splashScreen();
+var Tile = function(x, y, face) {
+    this.x = x;
+    this.y = y;
+    this.size = 50;
+    this.face = face;
+    this.isFaceUp = false;
+    this.isMatch = false;
+};
+
+Tile.prototype.draw = function() {
+    fill(214, 247, 202);
+    strokeWeight(2);
+    rect(this.x, this.y, this.size, this.size, 10);
+    if (this.isFaceUp) {
+        image(this.face, this.x, this.y, this.size, this.size);
+    } 
+    else if (this.isUnderMouse(mouseX, mouseY)) {
+         image(getImage("avatars/leaf-blue"), this.x, this.y, this.size, this.size);
+         
+    }
+    else {
+        image(getImage("avatars/leaf-green"), this.x, this.y, this.size, this.size);
+    }
+};
+
+Tile.prototype.isUnderMouse = function(x, y) {
+    return x >= this.x && x <= this.x + this.size  &&
+        y >= this.y && y <= this.y + this.size;
+};
+
+// Global config
+var NUM_COLS = 6;
+var NUM_ROWS = 4;
+// We neeed to change the images still
+// Declare an array of all possible faces
+var faces = [
+    getImage("avatars/leafers-seed"),
+    getImage("avatars/leafers-seedling"),
+    getImage("avatars/leafers-sapling"),
+    getImage("avatars/leafers-tree"),
+    getImage("avatars/leafers-ultimate"),
+    getImage("avatars/marcimus"),
+    getImage("avatars/mr-pants"),
+    getImage("avatars/mr-pink"),
+    getImage("avatars/old-spice-man"),
+    getImage("avatars/robot_female_1")
+];
+
+// Make an array which has 2 of each, then randomize it
+var possibleFaces = faces.slice(0);
+var selected = [];
+for (var i = 0; i < (NUM_COLS * NUM_ROWS) / 4; i++) {
+    // Randomly pick one from the array of remaining faces
+    var randomInd = floor(random(possibleFaces.length));
+    var face = possibleFaces[randomInd];
+    // Push twice onto array
+    selected.push(face);
+    selected.push(face);
+    selected.push(face);
+    selected.push(face);
+    // Remove from array
+    possibleFaces.splice(randomInd, 1);
+}
+
+// Now shuffle the elements of that array
+var shuffleArray = function(array) {
+    var counter = array.length;
+
+    // While there are elements in the array
+    while (counter > 0) {
+        // Pick a random index
+        var ind = Math.floor(Math.random() * counter);
+        // Decrease counter by 1
+        counter--;
+        // And swap the last element with it
+        var temp = array[counter];
+        array[counter] = array[ind];
+        array[ind] = temp;
+    }
+};
+shuffleArray(selected);
+
+// Create the tiles
+var tiles = [];
+for (var i = 0; i < NUM_COLS; i++) {
+    for (var j = 0; j < NUM_ROWS; j++) {
+        var tileX = i * 54 + 10;
+        var tileY = j * 54 + 40;
+        var tileFace = selected.pop();
+        tiles.push(new Tile(tileX, tileY, tileFace));
+    }
+}
+
+background(255, 255, 255);
+
+var numTries = 0;
+var numMatches = 0;
+var flippedTiles = [];
+var delayStartFC = null;
+
+mouseClicked = function() {
+    
+    if ( currentScene === 0 ){startButton.handleMouseClick();}
+    else if ( currentScene === 1){
+    for (var i = 0; i < tiles.length; i++) {
+        var tile = tiles[i];
+        if (tile.isUnderMouse(mouseX, mouseY)) {
+            if (flippedTiles.length < 4 && !tile.isFaceUp) {
+                tile.isFaceUp = true;
+                flippedTiles.push(tile);
+                if (flippedTiles.length === 4) {
+                    numTries++;
+                    if (flippedTiles[0].face === flippedTiles[1].face && flippedTiles[1].face === flippedTiles[2].face && flippedTiles[2].face === flippedTiles[3].face ) {
+                        flippedTiles[0].isMatch = true;
+                        flippedTiles[1].isMatch = true;
+                        flippedTiles[2].isMatch = true;
+                        flippedTiles[3].isMatch = true;
+                        flippedTiles.length = 0;
+                        numMatches++;
+                    }
+                    delayStartFC = frameCount;
+                }
+            } 
+            loop();
+        }
+    }
+}
+
+    };
+
+var drawScene2 = function () {
+    
+    //timer function
+     gameTime = (millis() - timeReset - 2000);
+    if (numMatches === tiles.length/4){
+        stillPlay = false;
+    }
+    var secTime = gameTime/1000;
+    textSize(29);
+    fill(0, 0, 0);
+    text("Time: " + round(secTime), 267, 360);
+    
+    //Number tries counter
+    text("Tries: " + numTries, 140, 360);
+    
+    
+    if (delayStartFC && (frameCount - delayStartFC) > 30) {
+        for (var i = 0; i < tiles.length; i++) {
+            var tile = tiles[i];
+            if (!tile.isMatch) {
+                tile.isFaceUp = false;
+            }
+        }
+        flippedTiles = [];
+        delayStartFC = null;
+        noLoop();
+    }
+    
+    for (var i = 0; i < tiles.length; i++) {
+        tiles[i].draw();
+    }
+    
+    if (numMatches === tiles.length/4) {
+        fill(0, 0, 0);
+        textSize(20);
+        text("You found them all in " + numTries + " tries!", 20, 320);
+    }
+    
+};
+draw = function() {
+    background(255, 255, 255);
+   
+  if (currentScene ===0){
+      splashScreen();
+  }
+  else if (currentScene === 1) {
+      drawScene2();
+  }
+};
+
+noLoop();

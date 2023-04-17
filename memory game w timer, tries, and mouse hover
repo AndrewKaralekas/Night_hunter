@@ -198,7 +198,7 @@ Button.prototype.handleMouseClick = function() {
         this.onClick();
     }
 };
-//this is the button that will be displayed at the bottom left of the screen
+//this is the button that will be displayed on the screen
 var startButton = new Button({
     x:130,
     y: 115,
@@ -207,11 +207,12 @@ var startButton = new Button({
         if ( currentScene === 0 )
         {
             currentScene = 1;
-
+            gameTime = millis();
     
         }
     }
 });
+//starting screen
 var splashScreen = function() 
 {
     background(32, 58, 189);
@@ -225,10 +226,9 @@ var splashScreen = function()
     text("Andrew Karalekas",227,199);
     startButton.draw();
     currentScene = 0;
-
-
 };
 splashScreen();
+//cards in the memory game
 var Tile = function(x, y, face) {
     this.x = x;
     this.y = y;
@@ -265,17 +265,13 @@ var NUM_ROWS = 4;
 // We neeed to change the images still
 // Declare an array of all possible faces
 var faces = [
-    getImage("avatars/leafers-seed"),
-    getImage("avatars/leafers-seedling"),
-    getImage("avatars/leafers-sapling"),
-    getImage("avatars/leafers-tree"),
-    getImage("avatars/leafers-ultimate"),
-    getImage("avatars/marcimus"),
-    getImage("avatars/mr-pants"),
-    getImage("avatars/mr-pink"),
-    getImage("avatars/old-spice-man"),
-    getImage("avatars/robot_female_1")
-];
+    getImage("avatars/marcimus-purple"),
+    getImage("avatars/orange-juice-squid"),
+    getImage("avatars/piceratops-sapling"),
+    getImage("creatures/OhNoes-Happy"),
+    getImage("avatars/primosaur-ultimate"),
+    getImage("avatars/starky-sapling"),
+    ];
 
 // Make an array which has 2 of each, then randomize it
 var possibleFaces = faces.slice(0);

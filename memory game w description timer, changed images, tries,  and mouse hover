@@ -5,6 +5,8 @@ var gameTime = millis();
 var timeReset = millis();
 var stillPlay = true; 
 
+
+
 var drawbitmoji = function (height, bitX, bitY) {
 
 
@@ -183,7 +185,7 @@ Button.prototype.draw = function() {
     fill(0, 0, 0);
     textSize(19);
     textAlign(LEFT, TOP);
-    text(this.label, this.x+10, this.y+this.height/4);
+    text(this.label, this.x+24, this.y+this.height/4);
 };
 
 Button.prototype.isMouseInside = function() {
@@ -224,6 +226,7 @@ var splashScreen = function()
     textSize(15);
     text("Rodrigo Amado",66,199);
     text("Andrew Karalekas",227,199);
+    text ("The objective of the game is to match the hidden images. \n Once all of the images have been matched the game is \n won. Good Luck!", 10, 317);
     startButton.draw();
     currentScene = 0;
 };
@@ -357,15 +360,13 @@ mouseClicked = function() {
 
 var drawScene2 = function () {
     
-    //timer function
-     gameTime = (millis() - timeReset - 2000);
+    
+    
+     
     if (numMatches === tiles.length/4){
         stillPlay = false;
     }
-    var secTime = gameTime/1000;
-    textSize(29);
-    fill(0, 0, 0);
-    text("Time: " + round(secTime), 267, 360);
+   
     
     //Number tries counter
     text("Tries: " + numTries, 140, 360);
@@ -402,6 +403,14 @@ draw = function() {
   }
   else if (currentScene === 1) {
       drawScene2();
+      var Timer = function(){
+    gameTime = (millis() - timeReset);
+    var secTime = gameTime/1000;
+    textSize(29);
+    fill(0, 0, 0);
+    text("Time: " + secTime, 267, 360);
+};
+      Timer(); 
   }
 };
 

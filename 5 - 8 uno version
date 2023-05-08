@@ -1,0 +1,477 @@
+var currentScene = 0;
+var dealWidth = 0;
+var stopDraw = false;
+var cardX = [];
+var cardY = [];
+var cardCol = [];
+var cardNum = [];
+var cardTyp = [];
+
+var splashScreen = function(){
+
+background(88, 92, 112);
+fill(255, 255, 255);
+textSize(71);
+text("UNO", 121,150);
+textSize(16);
+text("Click Anywhere to Start!", 120, 262);
+text("By: Andrew Karalekas & ", 63, 201);
+
+};
+
+var unoCard = function (config){
+
+    this.x = config.x;
+    this.y = config.y;
+    this.number = config.number;
+    this.color = config.color;
+    this.card = config.card;
+
+};
+
+unoCard.prototype.draw = function() {
+    
+    if(this.card === "wild"){
+        strokeWeight(1);
+        fill(255, 0, 0);
+        rect(this.x, this.y, 65, 100);
+        fill(0, 0, 0);
+        rect(this.x+ 5, this.y + 5, 55, 90);
+        fill(255, 0, 0);
+        ellipse(this.x+33, this.y+51, 50, 70);
+        fill(255, 255, 255);
+        textSize(22);
+        text("Wild!", this.x+10, this.y+57);
+
+    } else if (this.card === "draw4"){
+        strokeWeight(1);
+        fill(0, 255, 230);
+        rect(this.x, this.y, 65, 100);
+        fill(0, 0, 0);
+        rect(this.x+ 5, this.y + 5, 55, 90);
+        fill(255, 255, 255);
+        ellipse(this.x+33, this.y+51, 50, 70);
+        fill(255, 255, 255);
+        textSize(11);
+        text("Draw Four!", this.x+6, this.y+16);
+        text("Draw Four!", this.x+6, this.y+94);
+        fill(255, 0, 0);
+        rect(this.x+27, this.y+25, 12, 19);
+        fill(0, 255, 0);
+        rect(this.x+29, this.y+50, 12, 19);
+        fill(0, 0, 255);
+        rect(this.x+19, this.y+39, 12, 19);
+        fill(255, 255, 0);
+        rect(this.x+36, this.y+39, 12, 19);
+    } else if(this.card === "skip"){
+        fill(255, 255, 255);
+        strokeWeight(1);
+        rect(this.x, this.y, 65, 100);
+        if (this.color === "red"){
+        fill(255, 0, 0);
+        } else if (this.color === "blue") {
+            fill(0, 0, 255);
+        } else if (this.color === "green") { 
+            fill(0, 255, 0);
+        } else if (this.color === "yellow") { 
+            fill(255, 255, 0);
+        }
+        rect(this.x+ 5, this.y + 5, 55, 90);
+
+         noFill();
+         strokeWeight(6);
+         ellipse(this.x+33, this.y+40, 50, 50);
+         line(this.x+14, this.y+48, this.x+55, this.y+30);
+         fill(255, 255, 255);
+         textSize(20);
+         text("Skip!", this.x+12, this.y+91);
+    } else if (this.card === "reverse"){
+        strokeWeight(1);
+        fill(255, 255, 255);
+        rect(this.x, this.y, 65, 100);
+        if (this.color === "red"){
+        fill(255, 0, 0);
+        } else if (this.color === "blue") {
+            fill(0, 0, 255);
+        } else if (this.color === "green") { 
+            fill(0, 255, 0);
+        } else if (this.color === "yellow") { 
+            fill(255, 255, 0);
+        }
+        rect(this.x+ 5, this.y + 5, 55, 90);
+
+        fill(0, 0, 0);
+        strokeWeight(5);
+        line(this.x+29, this.y+48, this.x+56, this.y+20);
+        line(this.x+18, this.y+67, this.x+43, this.y+41);
+        strokeWeight(1);
+        triangle(this.x+8, this.y+82,this.x + 29, this.y+75,this.x+ 13,this.y + 60);
+        triangle(this.x+58, this.y+28,this.x + 43, this.y+17,this.x+ 59,this.y + 16);
+        textSize(13);
+        text("Reverse!", this.x+7, this.y+93);
+    } else if (this.card === "draw2"){
+        strokeWeight(1);
+        fill(255, 255, 255);
+        rect(this.x, this.y, 65, 100);
+        if (this.color === "red"){
+        fill(255, 0, 0);
+        } else if (this.color === "blue") {
+            fill(0, 0, 255);
+        } else if (this.color === "green") { 
+            fill(0, 255, 0);
+        } else if (this.color === "yellow") { 
+            fill(255, 255, 0);
+        }
+        rect(this.x+ 5, this.y + 5, 55, 90);
+
+        fill(0, 0, 0);
+        textSize(21);
+        text("+2", this.x+6, this.y+24);
+        text("+2", this.x+35, this.y+90);
+        fill(255, 255, 255);
+        ellipse(this.x+33, this.y+51, 50, 52);
+        fill(0, 255, 0);
+        rect(this.x+20, this.y+45, 16, 23);
+        fill(0, 0, 255);
+        rect(this.x+30, this.y+33, 16, 23);
+
+    }
+
+    else if (this.number > 0){
+        fill(255, 255, 255);
+        strokeWeight(1);
+        rect(this.x, this.y, 65, 100);
+        if (this.color === "red"){
+        fill(255, 0, 0);
+        } else if (this.color === "blue") {
+            fill(0, 0, 255);
+        } else if (this.color === "green") { 
+            fill(0, 255, 0);
+        } else if (this.color === "yellow") { 
+            fill(255, 255, 0);
+        }
+        rect(this.x+ 5, this.y + 5, 55, 90);
+
+        fill(0, 0, 0);
+        textSize(14);
+        text(this.number,this.x + 8, this.y + 21);
+        text(this.number,this.x + 50, this.y + 91);
+        textSize(35);
+        text(this.number, this.x + 24, this.y + 62);
+    }
+};
+
+
+
+
+
+var deck = function()
+{ 
+    fill(255, 0, 0);
+    rect(141,120,74,97);//red background
+    fill(0, 0, 0);
+    rect(141+ 5, 121 + 5, 65, 86);//black rectangle inside
+    fill(255, 0, 0);
+    ellipse(146+33, 119+51, 55, 70);
+    fill(255, 255, 255);
+    textSize(22);
+    text("UNO", 145+10, 120+57);
+    textSize(11);
+    fill(255, 255, 255);
+    text("click to draw",148,211);
+    
+};
+
+var dealCards = function(n, w, h){
+    var dealWidth = 0;
+    
+    for (var j = 0; j < n; j++) {
+        
+        var colorPicker = round(random(0.5,4.5));
+        var cardColor = 0;
+       
+
+        if (colorPicker === 1) {
+            cardColor = "blue";
+        } else if (colorPicker === 2) {
+            cardColor = "green";
+        } else if (colorPicker === 3) {
+            cardColor = "red"; 
+        } else if (colorPicker === 4) {
+            cardColor = "yellow";
+        }
+        var cardDealt =(round(random(0.5, 112.4)));
+        if (cardDealt <= 18) {
+            
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardCol.push("green");
+            cardNum.push( round(random(0.5,9.4)));
+            cardTyp.push("null");
+            
+        } else if (cardDealt >= 19 && cardDealt <= 36) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardCol.push("blue");
+            cardNum.push( round(random(0.5,9.4)));
+            cardTyp.push("null");
+        } else if (cardDealt >= 37 && cardDealt <= 54) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardCol.push("red");
+            cardNum.push( round(random(0.5,9.4)));
+            cardTyp.push("null");
+        } else if (cardDealt >= 55 && cardDealt <= 72) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardCol.push("yellow");
+            cardNum.push( round(random(0.5,9.4)));
+            cardTyp.push("null");
+        } else if (cardDealt >= 73 && cardDealt <= 80) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardTyp.push("reverse");
+            cardCol.push(cardColor);
+            cardNum.push("null");
+        } else if (cardDealt >= 81 && cardDealt <= 88) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardTyp.push("skip");
+            cardCol.push(cardColor);
+            cardNum.push("null");
+        } else if (cardDealt >= 89 && cardDealt <= 96) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardTyp.push("skip");
+            cardCol.push(cardColor);
+            cardNum.push("null");
+        } else if (cardDealt >= 97 && cardDealt <= 104) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardTyp.push("draw2");
+            cardCol.push(cardColor);
+            cardNum.push("null");
+        } else if (cardDealt >= 105 && cardDealt <= 108) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardTyp.push("wild");
+            cardNum.push("null");
+            cardCol.push("null");
+        } else if (cardDealt >= 109 && cardDealt <= 112) {
+            cardX.push( w + dealWidth); 
+            cardY.push( h);
+            cardTyp.push("draw4");
+            cardCol.push("null");
+            cardNum.push("null");
+        }
+        dealWidth += 30;
+    }
+};
+dealCards(108,14,263);
+
+
+var singleCard = function()
+{
+    for (var i = 0; i < 1; i++) {
+        var colorPicker = round(random(0.5,4.5));
+        var cardColor = 0;
+        if (i === 8) {stopDraw = true;}
+        if ( stopDraw === false) 
+        {
+
+        if (colorPicker === 1) {
+            cardColor = "blue";
+        } else if (colorPicker === 2) {
+            cardColor = "green";
+        } else if (colorPicker === 3) {
+            cardColor = "red"; 
+        } else if (colorPicker === 4) {
+            cardColor = "yellow";
+        }
+
+        var cardDealt = round(random(0.5, 112.4));
+        if (cardDealt <= 18) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+            color:"green",
+            number: round(random(0.5,9.4))
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 19 && cardDealt <= 36) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+            color:"blue",
+            number: round(random(0.5,9.4))
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 37 && cardDealt <= 54) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+            color:"red",
+            number: round(random(0.5,9.4))
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 55 && cardDealt <= 72) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+            color: "yellow",
+            number: round(random(0.5,9.4))
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 73 && cardDealt <= 80) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+            color: cardColor,
+            card: "reverse"
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 81 && cardDealt <= 88) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+            color: cardColor,
+            card: "skip"
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 89 && cardDealt <= 96) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+            color: cardColor,
+            card: "skip"
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 97 && cardDealt <= 104) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+            color: cardColor,
+            card: "draw2"
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 105 && cardDealt <= 108) {
+            var card = new unoCard({
+            x:300 + dealWidth, 
+            y:263,
+
+            card: "wild"
+
+
+
+            });
+            card.draw();
+
+        } else if (cardDealt >= 109 && cardDealt <= 112) {
+            var card = new unoCard({
+            x:290 + dealWidth, 
+            y:263,
+
+            card: "draw4"
+
+
+
+            });
+            card.draw();
+
+        }
+        dealWidth += 29;
+    }}
+    
+
+
+};
+
+
+mouseClicked = function()
+{   
+    if (currentScene === 0){
+        currentScene = 1;
+        
+    }
+    if ( mouseX > 135 && mouseY >120 && mouseX < 220 && mouseY <220 && currentScene === 1) 
+    {singleCard(0);
+    dealWidth = dealWidth / 1.5;
+    currentScene = 1;
+    }
+}; 
+
+var gameScene = function()
+{
+    background(21, 21, 230);
+    
+    deck();
+    for (var i = 0;i<=7;i++){
+        if (cardTyp[i] === "draw4" || cardTyp[i]==="wild") {
+            var card = new unoCard({
+                card: cardTyp[i],
+                x: cardX[i],
+                y: cardY[i]
+            });
+            card.draw();
+        } else if (cardTyp[i] === "reverse" ||cardTyp[i] === "skip" ||cardTyp[i] === "draw2" ) {
+        var card2 = new unoCard({
+           
+            card: cardTyp[i],
+            x: cardX[i],
+            y: cardY[i], 
+            color: cardCol[i]
+        });
+        card2.draw();
+    } else {
+        var card2 = new unoCard({
+            x: cardX[i],
+            y: cardY[i], 
+            color: cardCol[i],
+            number: cardNum[i]
+        });
+        card2.draw();
+        
+    }
+}
+};
+
+var draw = function() {
+     
+  
+if (currentScene === 0){ 
+      splashScreen();} 
+else if (currentScene === 1) {
+      gameScene(); }
+}; 

@@ -168,6 +168,7 @@ unoCard.prototype.draw = function() {
 
 var deck = function()
 { 
+    strokeWeight(1);
     fill(255, 0, 0);
     rect(141,120,74,97);//red background
     fill(0, 0, 0);

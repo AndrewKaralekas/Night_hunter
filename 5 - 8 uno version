@@ -7,6 +7,7 @@ var cardCol = [];
 var cardNum = [];
 var cardTyp = [];
 
+
 var splashScreen = function(){
 
 background(88, 92, 112);
@@ -412,6 +413,7 @@ var singleCard = function()
 
         }
         dealWidth += 29;
+        
     }}
     
 
@@ -434,36 +436,88 @@ mouseClicked = function()
 
 var gameScene = function()
 {
-    background(21, 21, 230);
     
+    background(21, 21, 230);
+    var deckPlace = 0;
+    var deckHold = 0;
     deck();
     for (var i = 0;i<=7;i++){
-        if (cardTyp[i] === "draw4" || cardTyp[i]==="wild") {
+        
+        
+        deckPlace = i;
+        if (cardTyp[deckPlace] === "draw4" || cardTyp[deckPlace]==="wild") {
             var card = new unoCard({
-                card: cardTyp[i],
-                x: cardX[i],
-                y: cardY[i]
+                card: cardTyp[deckPlace],
+                x: cardX[deckPlace],
+                y: cardY[deckPlace]
+                
             });
+            deckPlace++;
+            deckHold++;
             card.draw();
-        } else if (cardTyp[i] === "reverse" ||cardTyp[i] === "skip" ||cardTyp[i] === "draw2" ) {
+        } else if (cardTyp[deckPlace] === "reverse" ||cardTyp[deckPlace] === "skip" ||cardTyp[deckPlace] === "draw2" ) {
         var card2 = new unoCard({
            
-            card: cardTyp[i],
-            x: cardX[i],
-            y: cardY[i], 
-            color: cardCol[i]
+            card: cardTyp[deckPlace],
+            x: cardX[deckPlace],
+            y: cardY[deckPlace], 
+            color: cardCol[deckPlace]
+            
         });
+        deckPlace++;
+        deckHold++;
         card2.draw();
     } else {
         var card2 = new unoCard({
-            x: cardX[i],
-            y: cardY[i], 
-            color: cardCol[i],
-            number: cardNum[i]
+            x: cardX[deckPlace],
+            y: cardY[deckPlace], 
+            color: cardCol[deckPlace],
+            number: cardNum[deckPlace]
         });
         card2.draw();
-        
+        deckPlace++;
+        deckHold++;
     }
+    
+}
+for (var i = 0;i<=0;i++){
+        
+        
+        deckPlace = i+deckHold;
+        if (cardTyp[deckPlace] === "draw4" || cardTyp[deckPlace]==="wild") {
+            var card = new unoCard({
+                card: cardTyp[deckPlace],
+                x: 265,
+                y: 120
+                
+            });
+            deckPlace++;
+            deckHold++;
+            card.draw();
+        } else if (cardTyp[deckPlace] === "reverse" ||cardTyp[deckPlace] === "skip" ||cardTyp[deckPlace] === "draw2" ) {
+        var card2 = new unoCard({
+           
+            card: cardTyp[deckPlace],
+            x: 265,
+            y: 120, 
+            color: cardCol[deckPlace]
+            
+        });
+        deckPlace++;
+        deckHold++;
+        card2.draw();
+    } else {
+        var card2 = new unoCard({
+            x: 265,
+            y: 120, 
+            color: cardCol[deckPlace],
+            number: cardNum[deckPlace]
+        });
+        card2.draw();
+        deckPlace++;
+        deckHold++;
+    }
+    
 }
 };
 
@@ -475,3 +529,4 @@ if (currentScene === 0){
 else if (currentScene === 1) {
       gameScene(); }
 }; 
+

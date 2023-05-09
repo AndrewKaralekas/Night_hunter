@@ -1,0 +1,88 @@
+var score = 0;
+var ops = [];
+var currentScene = 0;
+var ft = createFont("univers", 40);
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+Button.prototype.draw = function() {
+    fill(74, 161, 83);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+21, this.y+this.height/4);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+var btn1 = new Button({
+    x: 124,
+    y: 317,
+    label: "Start Game!",
+    onClick: function() {
+        currentScene = 1;
+    }
+});
+
+var splashScreen = function(){
+    background(125, 121, 121);
+    textSize(40);
+    textFont(ft);
+    text("NIGHT HUNTER", 42, 25);
+    btn1.draw();
+    
+};
+
+var gameScreen = function(){
+    background(255, 255, 255);
+    fill(0, 0, 0);
+    
+    rect(mouseX-400, mouseY-400,800, 800); 
+    fill(70, 171, 84);
+    ellipse(mouseX, mouseY, 100, 100);
+    fill(255, 0, 0);
+    line(mouseX-0, mouseY - 80, mouseX+0, mouseY + 80); 
+    line(mouseX - 80, mouseY, mouseX +80, mouseY);
+    
+    
+};
+var endScreen = function (){
+    
+    
+};
+
+mouseClicked = function() {
+    btn1.handleMouseClick();
+    
+};
+
+
+var draw = function() {
+    if (currentScene === 0){
+        splashScreen();   
+    } else if (currentScene ===1){
+    gameScreen();
+    } else if (currentScene ===2){
+        endScreen();   
+    }
+    
+};

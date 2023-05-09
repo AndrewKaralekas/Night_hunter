@@ -1,0 +1,190 @@
+var score = 0;
+var ops = [];
+var currentScene = 0;
+var score = 0;
+var startTime;
+var ft = createFont("univers", 40);
+var drawHead = function(X,Y,H){
+    fill (224, 172, 105);//skin color
+    ellipse(X+H/100*100,Y+H/100*100,H/100*78,H/100*100);//head
+    fill(125, 121, 121
+    );//chisel color
+    arc(X+H/100*45,Y+H/100*154,H/100*78,H/100*97,7,372);//left chisel 
+    arc(X+H/100*157,Y+H/100*154,H/100*78,H/100*97,7,372);//right chisel
+};
+var drawHair = function(X,Y,H){fill(48, 28, 14);//hair color
+    ellipse(X+H/100*66,Y+H/100*70,H/100*23,H/100*29);//hair
+    ellipse(X+H/100*57,Y+H/100*81,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*76,Y+H/100*61,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*88,Y+H/100*53,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*143,Y+H/100*81,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*119,Y+H/100*53,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*130,Y+H/100*61,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*136,Y+H/100*70,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*102,Y+H/100*50,H/100*21,H/100*29);//hair
+};
+var drawHat =function (X,Y,H){fill(230, 37, 37);//hat color
+    arc(X+H/100*104,Y+H/100*57,H/100*85,H/100*72,186,369);//hat
+    stroke(230,37,37);//hat
+    strokeWeight(H/100*5);//hat
+    line(X+H/100*63,Y+H/100*55,X+H/100*180,Y+H/100*66);//hat
+};
+var drawEyes= function (X,Y,H){
+    noStroke();
+    fill(240, 231, 226);//whitecolor
+    ellipse(X+H/100*89,Y+H/100*88,H/100*19,H/100*10);//left eye circle
+    fill(138,94,65);//brown color
+    ellipse(X+H/100*90,Y+H/100*88,H/100*13,H/100*7);//left middle eye circle
+    fill(0, 0, 0);//blackcolor
+    ellipse(X+H/100*90,Y+H/100*88,H/100*4,H/100*5);//left eye
+    //ellipse(118,88,5,5);//right eye
+    fill(240, 231, 226);//whitecolor
+    ellipse(X+H/100*117,Y+H/100*88,H/100*19,H/100*10);//right eye circle
+    fill(138,94,65);//brown color
+    ellipse(X+H/100*116,Y+H/100*88,H/100*13,H/100*7);//right middle eye circle
+    fill(0, 0, 0);//blackcolor
+    ellipse(X+H/100*116,Y+H/100*88,H/100*4,H/100*5);//right eye  
+};
+var drawNoseMouth= function(X,Y,H){
+    fill(224, 172, 105);//nose color
+    stroke(0, 0, 0);//stroke
+    strokeWeight(H/100*2);//strokeweight
+    bezier(X+H/100*104,Y+H/100*97,X+H/100*124,Y+H/100*128,X+H/100*98,Y+H/100*122,X+H/100*97    ,Y+H/100*117);//nose shape
+    fill(255, 255, 255);
+    arc(X+H/100*102,Y+H/100*129,H/100*30,H/100*10,1,180);//mouth
+    stroke(0, 0, 0);
+    line(X+H/100*85,Y+H/100*128,X+H/100*118,Y+H/100*128);//top lip 
+};
+var drawHoodie= function(X,Y,H){
+    fill(9, 21, 82);//sweater color 
+    noStroke();
+    quad(X+H/100*37,Y+H/100*140,X+H/100*183,Y+H/100*248,X+H/100*174,Y+H/100*140,X+H/100*101    ,Y+H/100*149);//sweater 
+    quad(X+H/100*37,Y+H/100*140,X+H/100*29,Y+H/100*243,X+H/100*184,Y+H/100*249,X+H/100*102,Y    +H/100*152);//sweater
+};
+var drawText=function(X,Y,H){
+    fill(255, 255, 255);//text color
+    textSize(H/100*20);//text size
+    text("Paris",X+H/100*50,Y+H/100*175);//text 
+    textSize(H/100*8);//text size
+    text("Huncho",X+H/100*90,Y+H/100*56);//text on hat
+    textSize(H/100*28);//name size
+    text("RG",X+H/100*111,Y+H/100*186);//my name on shirt 
+};
+var drawBitmojiHead=function(X,Y,H){
+    drawHead(X,Y,H);
+    drawHair(X,Y,H);
+    drawHat(X,Y,H);
+    drawEyes(X,Y,H);
+    drawNoseMouth(X,Y,H);
+};
+var drawBitmojiBody=function(X,Y,H){
+    drawText(X,Y,H);
+    drawHoodie(X,Y,H);
+};
+var drawBitmoji=function(X,Y,H){
+    drawBitmojiHead(X,Y,H);
+    drawBitmojiBody(X,Y,H);
+};
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+Button.prototype.draw = function() {
+    fill(74, 161, 83);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+21, this.y+this.height/4);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+var btn1 = new Button({
+    x: 124,
+    y: 317,
+    label: "Start Game!",
+    onClick: function() {
+        currentScene = 1;
+        startTime = millis();
+    }
+});
+var btn2 = new Button({
+    x: 124,
+    y: 317,
+    label: "Restart Game!",
+    onClick: function() {
+        currentScene = 0;
+        
+    }
+});
+
+var splashScreen = function(){
+    background(125, 121, 121);
+    textSize(40);
+    textFont(ft);
+    text("NIGHT HUNTER", 42, 25);
+    btn1.draw();
+    drawBitmoji(42,141,50);
+
+};
+
+var gameScreen = function(){
+    background(255, 255, 255);
+    fill(0, 0, 0);
+
+    rect(mouseX-400, mouseY-400,800, 800); 
+    fill(70, 171, 84);
+    ellipse(mouseX, mouseY, 100, 100);
+    fill(255, 0, 0);
+    line(mouseX-0, mouseY - 80, mouseX+0, mouseY + 80); 
+    line(mouseX - 80, mouseY, mouseX +80, mouseY);
+
+
+};
+var endScreen = function (){
+    background(125, 121, 121);
+    textSize(40);
+    textFont(ft);
+    text(" GAME OVER!", 50,150);
+    btn2.draw();
+    text("Total Score:" + score, 38,12); 
+    text("Time Survived:" +  round((millis() - startTime)/1000),180,12);
+    
+
+};
+endScreen();
+
+mouseClicked = function() {
+    btn1.handleMouseClick();
+    if(mouseX >200 && mouseY >200 && mouseX < 400 && mouseY < 400){currentScene = 2;}
+    
+};
+
+
+var draw = function() {
+    if (currentScene === 0){
+        splashScreen();   
+    } else if (currentScene ===1){
+    gameScreen();
+    } else if (currentScene === 2){
+        endScreen();   
+    }
+
+};

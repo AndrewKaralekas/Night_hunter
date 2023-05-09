@@ -1,0 +1,32 @@
+var score = 0;
+var ops = [];
+
+
+var splashScreen = function(){
+    
+    
+};
+
+var gameScreen = function(){
+    background(255, 255, 255);
+    fill(0, 0, 0);
+    
+    rect(mouseX-400, mouseY-400,800, 800); 
+    fill(255, 255, 255);
+    ellipse(mouseX, mouseY, 100, 100);
+    fill(255, 0, 0);
+    line(mouseX-0, mouseY - 80, mouseX+0, mouseY + 80); 
+    line(mouseX - 80, mouseY, mouseX +80, mouseY);
+    
+    
+};
+var endScreen = function (){
+    
+    
+};
+
+
+
+var draw = function() {
+    gameScreen();
+};

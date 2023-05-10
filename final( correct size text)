@@ -1,0 +1,489 @@
+var score = 0;
+var waveNum = 1;
+var opLocx = [];
+var opLocy = [];
+var enLoc = 30;
+var numEm = 0;
+var currentScene = 0;
+var ft = createFont("univers", 40);
+var gameTime = millis();
+var timeReset = millis();
+var stillPlay = true; 
+var hitMark = 0 + mouseX;
+var hitMarky = 0 + mouseY;
+var hitMarktime = 0;
+var startTime;
+// X and Y variables for bitmoji
+var bitmX = 0;
+var bitmY = 0; 
+
+
+//Andrew bitmoji
+
+var drawbitmoji = function (height, bitX, bitY) {
+
+
+
+var drawbody = function() {
+
+
+// start shirt 
+    fill(227, 164, 221);
+    noStroke();
+    rect(bitX +height/130*144, bitY + height/130* 215, height/130*106, height/130*32);
+    fill(46, 21, 1);
+    textSize(height/130*22);
+    text("AK", bitX +height/130*218, bitY + height/130*230,height/130* 73,height/130* 40);
+// end shirt
+
+//start head
+    fill(247, 221, 161);
+    noStroke();
+    ellipse(bitX +height/130*200,bitY + height/130*170,height/130*91,height/130* 130); 
+    fill(255, 255, 255); 
+    noStroke();
+    fill(255, 255, 255);
+    
+// end head
+
+// hat
+    fill(4, 1, 26);
+    stroke(255, 255, 255);
+    strokeWeight(height/130*2);
+    arc(bitX +height/130*200, bitY + height/130*133,height/130*81,height/130*67,180,361);
+    fill(71, 70, 79);
+    arc(bitX +height/130*200, bitY + height/130*133,height/130*79,height/130*-19,180,361);
+    fill(145, 151, 166);
+    quad(bitX +height/130*223, bitY + height/130* 119,bitX + height/130*201, bitY +height/130*  129,bitX +height/130* 178, bitY + height/130* 119,bitX + height/130*201,  bitY +height/130* 108);
+// end hat 
+
+// eyebrows
+    noFill();
+    stroke(59, 32, 2);
+    strokeWeight(height/130*2);
+    arc(bitX +height/130*179, bitY + height/130*151,height/130*22,height/130*15,204,334);
+    arc(bitX +height/130*223, bitY + height/130*151,height/130*22,height/130*15,202,344);
+// end eyebrows
+
+// mouth
+    fill(255, 255, 255);
+    stroke(163, 27, 48);
+    arc(bitX +height/130*201, bitY + height/130*207,height/130*45,height/130*22,361,539);
+    line(bitX +height/130*221, bitY +  height/130*207,bitX + height/130*180, bitY +  height/130*207);
+// end mouth
+
+// nose
+    fill(247, 221, 161);
+    stroke(0, 0, 0);
+    strokeWeight(height/130*3);
+    bezier(bitX +height/130*203, bitY + height/130* 187,bitX + height/130*242, bitY +  height/130*194,bitX + height/130*190, bitY + height/130* 167,bitX + height/130*202,  bitY + height/130*173);
+// nose end
+};
+
+var eyes = function () {
+
+
+//eyes
+    noStroke();
+    fill(237, 237, 240);
+    ellipse(bitX + height/130*178,bitY + height/130*156, height/130*18,height/130* 14); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*156, height/130*18, height/130*14); // //right eye
+    fill(16, 23, 122);
+    ellipse(bitX + height/130*178,bitY + height/130*157, height/130*11,height/130* 8); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*157, height/130*11, height/130*8); // //right eye
+    fill(0, 0, 0);
+    ellipse(bitX + height/130*178,bitY + height/130*157,height/130* 4, height/130*3); // //left eye
+    ellipse(bitX + height/130*222,bitY + height/130*157, height/130*4, height/130*3); // //right eye
+//end eyes  
+
+};
+
+    drawbody();
+    eyes();
+
+};
+
+// rodrigo bitmoji
+var drawHead = function(X,Y,H){
+    fill (224, 172, 105);//skin color
+    ellipse(X+H/100*100,Y+H/100*100,H/100*78,H/100*100);//head
+    fill(125, 121, 121
+    );//chisel color
+    arc(X+H/100*45,Y+H/100*154,H/100*78,H/100*97,7,372);//left chisel 
+    arc(X+H/100*157,Y+H/100*154,H/100*78,H/100*97,7,372);//right chisel
+};
+var drawHair = function(X,Y,H){fill(48, 28, 14);//hair color
+    ellipse(X+H/100*66,Y+H/100*70,H/100*23,H/100*29);//hair
+    ellipse(X+H/100*57,Y+H/100*81,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*76,Y+H/100*61,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*88,Y+H/100*53,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*143,Y+H/100*81,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*119,Y+H/100*53,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*130,Y+H/100*61,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*136,Y+H/100*70,H/100*21,H/100*29);//hair
+    ellipse(X+H/100*102,Y+H/100*50,H/100*21,H/100*29);//hair
+};
+var drawHat =function (X,Y,H){fill(230, 37, 37);//hat color
+    arc(X+H/100*104,Y+H/100*57,H/100*85,H/100*72,186,369);//hat
+    stroke(230,37,37);//hat
+    strokeWeight(H/100*5);//hat
+    line(X+H/100*63,Y+H/100*55,X+H/100*180,Y+H/100*66);//hat
+};
+var drawEyes= function (X,Y,H){
+    noStroke();
+    fill(240, 231, 226);//whitecolor
+    ellipse(X+H/100*89,Y+H/100*88,H/100*19,H/100*10);//left eye circle
+    fill(138,94,65);//brown color
+    ellipse(X+H/100*90,Y+H/100*88,H/100*13,H/100*7);//left middle eye circle
+    fill(0, 0, 0);//blackcolor
+    ellipse(X+H/100*90,Y+H/100*88,H/100*4,H/100*5);//left eye
+    //ellipse(118,88,5,5);//right eye
+    fill(240, 231, 226);//whitecolor
+    ellipse(X+H/100*117,Y+H/100*88,H/100*19,H/100*10);//right eye circle
+    fill(138,94,65);//brown color
+    ellipse(X+H/100*116,Y+H/100*88,H/100*13,H/100*7);//right middle eye circle
+    fill(0, 0, 0);//blackcolor
+    ellipse(X+H/100*116,Y+H/100*88,H/100*4,H/100*5);//right eye  
+};
+var drawNoseMouth= function(X,Y,H){
+    fill(224, 172, 105);//nose color
+    stroke(0, 0, 0);//stroke
+    strokeWeight(H/100*2);//strokeweight
+    bezier(X+H/100*104,Y+H/100*97,X+H/100*124,Y+H/100*128,X+H/100*98,Y+H/100*122,X+H/100*97    ,Y+H/100*117);//nose shape
+    fill(255, 255, 255);
+    arc(X+H/100*102,Y+H/100*129,H/100*30,H/100*10,1,180);//mouth
+    stroke(0, 0, 0);
+    line(X+H/100*85,Y+H/100*128,X+H/100*118,Y+H/100*128);//top lip 
+};
+var drawHoodie= function(X,Y,H){
+    fill(9, 21, 82);//sweater color 
+    noStroke();
+    quad(X+H/100*37,Y+H/100*140,X+H/100*183,Y+H/100*248,X+H/100*174,Y+H/100*140,X+H/100*101    ,Y+H/100*149);//sweater 
+    quad(X+H/100*37,Y+H/100*140,X+H/100*29,Y+H/100*243,X+H/100*184,Y+H/100*249,X+H/100*102,Y    +H/100*152);//sweater
+};
+var drawText=function(X,Y,H){
+    fill(255, 255, 255);//text color
+    textSize(H/100*20);//text size
+    text("Paris",X+H/100*50,Y+H/100*175);//text 
+    textSize(H/100*8);//text size
+    text("Huncho",X+H/100*90,Y+H/100*56);//text on hat
+    textSize(H/100*28);//name size
+    text("RG",X+H/100*111,Y+H/100*186);//my name on shirt 
+};
+var drawBitmojiHead=function(X,Y,H){
+    drawHead(X,Y,H);
+    drawHair(X,Y,H);
+    drawHat(X,Y,H);
+    drawEyes(X,Y,H);
+    drawNoseMouth(X,Y,H);
+};
+var drawBitmojiBody=function(X,Y,H){
+    drawText(X,Y,H);
+    drawHoodie(X,Y,H);
+};
+var drawBitmoji=function(X,Y,H){
+    drawBitmojiHead(X,Y,H);
+    drawBitmojiBody(X,Y,H);
+};
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+
+Button.prototype.draw = function() {
+    fill(74, 161, 83);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+30, this.y+this.height/4);
+};
+
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+           mouseX < (this.x + this.width) &&
+           mouseY > this.y &&
+           mouseY < (this.y + this.height);
+};
+
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+        this.onClick();
+    }
+};
+
+var btn1 = new Button({
+    x: 124,
+    y: 344,
+    label: "Start Game!",
+    onClick: function() {
+        currentScene = 1;
+        startTime = millis();
+        gameTime = startTime - gameTime;
+        stillPlay = true;
+    }
+});
+var btn2 = new Button({
+    x: 124,
+    y: 317,
+    label: "Restart Game!",
+    onClick: function() {
+        currentScene = 0;
+        startTime = millis() - gameTime + millis();
+        waveNum = 1;
+        
+    }
+});
+var btn3 = new Button({
+    x: 266,
+    y: 5, 
+    label: "Quit Game",
+    onClick: function() {
+        currentScene = 2;    
+        
+        
+    }
+});
+
+var hitMarker = function (){
+    hitMark = mouseX -121; //121
+    hitMarky = mouseY - 109;
+    
+    fill(255, 0, 0);
+    quad(hitMark + 112, hitMarky +  110, hitMark +  117,hitMarky +  118,hitMark + 131, hitMarky +  116, hitMark +  130,hitMarky +  107);
+    fill(242, 255, 0);
+    triangle(hitMark + 130, hitMarky +  107, hitMark +  120,hitMarky +  108, hitMark +  130,hitMarky +  97);
+    triangle(hitMark + 114, hitMarky +  110, hitMark +  130,hitMarky +  108, hitMark +  114,hitMarky +  100);
+    triangle(hitMark + 115, hitMarky +  114, hitMark +  118,hitMarky +  108, hitMark +  106,hitMarky +  100);
+    triangle(hitMark + 117, hitMarky +  118, hitMark +  113,hitMarky +  109, hitMark +  106,hitMarky +  118);
+    triangle(hitMark + 133, hitMarky +  113, hitMark +  129,hitMarky +  125, hitMark +  114,hitMarky +  117);
+    triangle(hitMark + 131, hitMarky +  113, hitMark +  129,hitMarky +  106, hitMark +  137,hitMarky +  110);
+    fill(255, 157, 0);
+    triangle(hitMark + 114, hitMarky +  110, hitMark +  116,hitMarky +  105, hitMark +  135,hitMarky +  110);
+    triangle(hitMark + 111, hitMarky +  116, hitMark +  126,hitMarky +  119, hitMark +  132,hitMarky +  110);
+};
+
+var splashScreen = function(){
+    background(125, 121, 121);
+    textSize(40);
+    textFont(ft);
+    fill(0, 0, 0);
+    text("NIGHT HUNTER", 50, 25);
+    textSize(16);
+    text("By: Andrew Karalekas & Rodrigo Amado", 61, 67);
+    btn1.draw();
+    drawBitmoji(242,87,50);
+    drawbitmoji(98, -48,14);
+    textSize(14);
+    text("                    Hunt as many enemies as you can!\n\nYou have 15 seconds to eliminate all enemies in each wave, \nexcept for the last wave which lasts 30 seconds.      \n\n                    How many waves an you survive?", 9, 212);
+};
+var enemyLoc = function(){
+    var numx = 0;
+    var numy = 0;
+for (var i = 0;i < enLoc; i++){
+    numx = round(random(20, 360));
+    numy = round(random(60, 360));
+    opLocx.push(numx);
+    opLocy.push(numy);
+    
+   
+}
+
+
+
+};
+enemyLoc();
+
+
+
+var gameScreen = function(){
+    
+    if (waveNum === 1 && round((millis() - startTime)/1000) > 15){
+        stillPlay = false;
+    } else if ( waveNum === 2 && round((millis() - startTime)/1000) > 30){
+        stillPlay = false;
+    } else if (waveNum === 3 && round((millis() - startTime)/1000) > 45){
+        stillPlay = false;
+    } else if (waveNum === 4 && round((millis() - startTime)/1000) > 60){
+        stillPlay = false;
+    } else if (waveNum === 5 && round((millis() - startTime)/1000) > 90){
+        stillPlay = false;
+    }
+    
+    if (stillPlay === true){
+    background(0, 0, 0);
+    if(currentScene === 1){
+    
+    }
+    
+    
+    
+    
+    fill(70, 171, 84);
+    
+    ellipse(mouseX, mouseY, 100, 100);
+    if(waveNum ===1 && mouseX > opLocx[1] - 5 && mouseX < opLocx[1]+ 60 && mouseY  > opLocy[1]  && mouseY < opLocy[1] + 58) {
+    image(getImage("avatars/robot_female_1"), opLocx[1], opLocy[1],54, 55);
+    } else if (waveNum === 2 && score ===1 && mouseX > opLocx[2]  && mouseX < opLocx[2]+ 60 && mouseY  > opLocy[2]  && mouseY < opLocy[2] + 58) {
+        image(getImage("avatars/duskpin-ultimate"), opLocx[2], opLocy[2],54, 55);
+        } else if (waveNum === 2 && mouseX > opLocx[3] - 5  && score ===2&& mouseX < opLocx[3]+ 50 && mouseY  > opLocy[3] -5 && mouseY < opLocy[3] + 65) {
+        image(getImage("avatars/duskpin-ultimate"), opLocx[3], opLocy[3],54, 55);
+    } else if (waveNum === 3 && score ===3 && mouseX > opLocx[5] - 5 && mouseX < opLocx[5]+ 50 && mouseY  > opLocy[5] -5 && mouseY < opLocy[5] + 65) {
+        image(getImage("avatars/piceratops-ultimate"), opLocx[5], opLocy[5],54, 55);
+    }  else if ( score ===4 && waveNum === 3 && mouseX > opLocx[4] - 5 && mouseX < opLocx[4]+ 50 && mouseY  > opLocy[4] -5 && mouseY < opLocy[4] + 65) {
+        image(getImage("avatars/piceratops-ultimate"), opLocx[4], opLocy[4],54, 55);
+    } else if ( score ===5 && waveNum === 3 && mouseX > opLocx[6] - 5 && mouseX < opLocx[6]+ 50 && mouseY  > opLocy[6] -5 && mouseY < opLocy[6] + 65) {
+        image(getImage("avatars/piceratops-ultimate"), opLocx[6], opLocy[6],54, 55);
+    }  else if ( score ===6 && waveNum === 4 && mouseX > opLocx[7] - 5 && mouseX < opLocx[7]+ 50 && mouseY  > opLocy[7] -5 && mouseY < opLocy[7] + 65) {
+        image(getImage("avatars/robot_male_3"), opLocx[7], opLocy[7],54, 55);
+    }  else if ( score ===7 && waveNum === 4 && mouseX > opLocx[8] - 5 && mouseX < opLocx[8]+ 50 && mouseY  > opLocy[8] -5 && mouseY < opLocy[8] + 65) {
+        image(getImage("avatars/robot_male_3"), opLocx[8], opLocy[8],54, 55);
+    }  else if ( score ===8 && waveNum === 4 && mouseX > opLocx[9] - 5 && mouseX < opLocx[9]+ 50 && mouseY  > opLocy[9] -5 && mouseY < opLocy[9] + 65) {
+        image(getImage("avatars/robot_male_3"), opLocx[9], opLocy[9],54, 55);
+    }  else if ( score ===9 && waveNum === 4 && mouseX > opLocx[10] - 5 && mouseX < opLocx[10]+ 50 && mouseY  > opLocy[10] -5 && mouseY < opLocy[10] + 65) {
+        image(getImage("avatars/robot_male_3"), opLocx[10], opLocy[10],54, 55);
+    }  else if ( score ===10 &&waveNum === 4 && mouseX > opLocx[11] - 5 && mouseX < opLocx[11]+ 50 && mouseY  > opLocy[11] -5 && mouseY < opLocy[11] + 65) {
+        image(getImage("avatars/robot_male_3"), opLocx[11], opLocy[11],54, 55);
+    }  else if ( score ===11 &&waveNum === 5 && mouseX > opLocx[12] + 5 && mouseX < opLocx[12]+ 40 && mouseY  > opLocy[12] +5 && mouseY < opLocy[12] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[12], opLocy[12],54, 55);
+    }  else if ( score ===12 &&waveNum === 5 && mouseX > opLocx[13] + 5 && mouseX < opLocx[13]+ 40 && mouseY  > opLocy[13] +5 && mouseY < opLocy[13] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[13], opLocy[13],54, 55);
+    }  else if ( score ===13 &&waveNum === 5 && mouseX > opLocx[14] + 5 && mouseX < opLocx[14]+ 40 && mouseY  > opLocy[14] +5 && mouseY < opLocy[14] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[14], opLocy[14],54, 55);
+    }   else if ( score ===14 &&waveNum === 5 && mouseX > opLocx[15] + 5 && mouseX < opLocx[15]+ 40 && mouseY  > opLocy[15] +5 && mouseY < opLocy[15] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[15], opLocy[15],54, 55);
+    }  else if ( score ===15 &&waveNum === 5 && mouseX > opLocx[16] + 5 && mouseX < opLocx[16]+ 40 && mouseY  > opLocy[16] +5 && mouseY < opLocy[16] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[16], opLocy[16],54, 55);
+    }  else if (score ===16 &&waveNum === 5 && mouseX > opLocx[17] + 5 && mouseX < opLocx[17]+ 40 && mouseY  > opLocy[17] +5 && mouseY < opLocy[17] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[17], opLocy[17],54, 55);
+    }  else if (score ===17 &&waveNum === 5 && mouseX > opLocx[18] + 5 && mouseX < opLocx[18]+ 40 && mouseY  > opLocy[18] +5 && mouseY < opLocy[18] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[18], opLocy[18],54, 55);
+    }  else if (score ===18 &&waveNum === 5 && mouseX > opLocx[19] + 5 && mouseX < opLocx[19]+ 40 && mouseY  > opLocy[19] +5 && mouseY < opLocy[19] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[19], opLocy[19],54, 55);
+    }  else if (score ===19 &&waveNum === 5 && mouseX > opLocx[20] + 5 && mouseX < opLocx[20]+ 40 && mouseY  > opLocy[20] +5 && mouseY < opLocy[20] + 60) {
+        image(getImage("avatars/starky-sapling"), opLocx[20], opLocy[20],54, 55);
+    }  
+    
+    fill(255, 0, 0);
+    strokeWeight(2);
+    stroke(255, 0, 0);
+    line(mouseX-0, mouseY - 50, mouseX-0, mouseY + 48); 
+    line(mouseX - 50, mouseY, mouseX +49, mouseY);
+    
+    if (score === 1){
+        waveNum = 2;
+    } if (score === 3){
+        waveNum = 3;
+    } if (score === 6){
+        waveNum = 4;
+    } if (score === 11){
+        waveNum = 5;
+    } if (score === 20){
+        stillPlay = false;
+    }
+    
+    fill(31, 117, 21);
+    textSize(20);
+    text("Score: " + score, 1, 10);
+    text("Time: " + round((millis() - startTime)/1000), 185, 10);
+    text("Wave: " + waveNum, 96, 10);
+    btn3.draw();
+    } else if (stillPlay === false) {
+        currentScene = 2;
+        
+    }
+    
+};
+var endScreen = function (){
+    background(125, 121, 121);
+    btn2.draw();
+    
+    textFont(ft);
+    textSize(60);
+    text(" GAME OVER!", 0,8);
+    textSize(35);
+    text("Total Score:" + score, 29,90); 
+    
+    text("Waves Survived:" +  waveNum,30,124);
+    textSize(24);
+    text("Try Again Soon! \nMaybe next time you will be faster! ", 10, 218);
+};
+
+mouseClicked = function() {
+    if (currentScene === 0){
+        btn1.handleMouseClick();
+        
+    } else if (currentScene === 1){
+        
+        for (var i = gameTime; i<gameTime + 800; i++){
+        hitMarker();
+        btn3.handleMouseClick();
+        }
+        if(mouseX > opLocx[1] - 5 && mouseX < opLocx[1]+ 50 && mouseY  > opLocy[1] -5 && mouseY < opLocy[1] + 65) {
+    score++;
+    } else if (waveNum === 2 && mouseX > opLocx[2] - 5 && mouseX < opLocx[2]+ 50 && mouseY  > opLocy[2] -5 && mouseY < opLocy[2] + 65) {
+        score++;
+        } else if (waveNum === 2 && mouseX > opLocx[3] - 5 && mouseX < opLocx[3]+ 50 && mouseY  > opLocy[3] -5 && mouseY < opLocy[3] + 65) {
+        score++;
+    } else if (waveNum === 3 && mouseX > opLocx[5] - 5 && mouseX < opLocx[5]+ 50 && mouseY  > opLocy[5] -5 && mouseY < opLocy[5] + 65) {
+        score++;
+    }  else if (waveNum === 3 && mouseX > opLocx[4] - 5 && mouseX < opLocx[4]+ 50 && mouseY  > opLocy[4] -5 && mouseY < opLocy[4] + 65) {
+        score++;
+    } else if (waveNum === 3 && mouseX > opLocx[6] - 5 && mouseX < opLocx[6]+ 50 && mouseY  > opLocy[6] -5 && mouseY < opLocy[6] + 65) {
+        score++;
+    }  else if (waveNum === 4 && mouseX > opLocx[7] - 5 && mouseX < opLocx[7]+ 50 && mouseY  > opLocy[7] -5 && mouseY < opLocy[7] + 65) {
+       score++;
+    }  else if (waveNum === 4 && mouseX > opLocx[8] - 5 && mouseX < opLocx[8]+ 50 && mouseY  > opLocy[8] -5 && mouseY < opLocy[8] + 65) {
+        score++;
+    }  else if (waveNum === 4 && mouseX > opLocx[9] - 5 && mouseX < opLocx[9]+ 50 && mouseY  > opLocy[9] -5 && mouseY < opLocy[9] + 65) {
+        score++;
+    }  else if (waveNum === 4 && mouseX > opLocx[10] - 5 && mouseX < opLocx[10]+ 50 && mouseY  > opLocy[10] -5 && mouseY < opLocy[10] + 65) {
+        score++;
+    }  else if (waveNum === 4 && mouseX > opLocx[11] - 5 && mouseX < opLocx[11]+ 50 && mouseY  > opLocy[11] -5 && mouseY < opLocy[11] + 65) {
+        score++;
+    }  else if (waveNum === 5 && mouseX > opLocx[12] + 5 && mouseX < opLocx[12]+ 40 && mouseY  > opLocy[12] +5 && mouseY < opLocy[12] + 60) {
+        score++;
+    }  else if (waveNum === 5 && mouseX > opLocx[13] + 5 && mouseX < opLocx[13]+ 40 && mouseY  > opLocy[13] +5 && mouseY < opLocy[13] + 60) {
+        score++;
+    }  else if (waveNum === 5 && mouseX > opLocx[14] + 5 && mouseX < opLocx[14]+ 40 && mouseY  > opLocy[14] +5 && mouseY < opLocy[14] + 60) {
+        score++;
+    }   else if (waveNum === 5 && mouseX > opLocx[15] + 5 && mouseX < opLocx[15]+ 40 && mouseY  > opLocy[15] +5 && mouseY < opLocy[15] + 60) {
+        score++;
+    }  else if (waveNum === 5 && mouseX > opLocx[16] + 5 && mouseX < opLocx[16]+ 40 && mouseY  > opLocy[16] +5 && mouseY < opLocy[16] + 60) {
+       score++;
+    }  else if (waveNum === 5 && mouseX > opLocx[17] + 5 && mouseX < opLocx[17]+ 40 && mouseY  > opLocy[17] +5 && mouseY < opLocy[17] + 60) {
+        score++;
+    }  else if (waveNum === 5 && mouseX > opLocx[18] + 5 && mouseX < opLocx[18]+ 40 && mouseY  > opLocy[18] +5 && mouseY < opLocy[18] + 60) {
+        score++;
+    }  else if (waveNum === 5 && mouseX > opLocx[19] + 5 && mouseX < opLocx[19]+ 40 && mouseY  > opLocy[19] +5 && mouseY < opLocy[19] + 60) {
+        score++;
+    }   else if (waveNum === 5 && mouseX > opLocx[20] + 5 && mouseX < opLocx[20]+ 40 && mouseY  > opLocy[20] +5 && mouseY < opLocy[20] + 60) {
+        score++;
+    }  
+    } else if (currentScene === 2) {
+        btn2.handleMouseClick();
+        
+    }
+};
+
+
+var draw = function() {
+   
+    if (currentScene === 0){
+        splashScreen(); 
+        score =0;
+         
+    } else if (currentScene ===1){
+    gameScreen();
+    
+    } else if (currentScene ===2){
+        endScreen();   
+        
+    }
+   
+};
